@@ -5,7 +5,7 @@ import (
 	"math"
 )
 
-type Matrix4 [16]float32
+type Matrix4 []float32
 
 // Construct the identity 4x4 matrix
 func Matrix4Identity() Matrix4 {
@@ -13,7 +13,8 @@ func Matrix4Identity() Matrix4 {
 		1, 0, 0, 0,
 		0, 1, 0, 0,
 		0, 0, 1, 0,
-		0, 0, 0, 1}
+		0, 0, 0, 1,
+	}
 }
 
 func MatrixMultiply(m1, m2 Matrix4) Matrix4 {
@@ -43,7 +44,8 @@ func MatrixTranslate(x, y, z float32) Matrix4 {
 		1, 0, 0, 0,
 		0, 1, 0, 0,
 		0, 0, 1, 0,
-		x, y, z, 1}
+		x, y, z, 1,
+	}
 }
 
 // Construct a scaling matrix
@@ -52,12 +54,12 @@ func MatrixScale(x, y, z float32) Matrix4 {
 		x, 0, 0, 0,
 		0, y, 0, 0,
 		0, 0, z, 0,
-		0, 0, 0, 1}
+		0, 0, 0, 1,
+	}
 }
 
 // Construct a perspective matrix
 func MatrixPerspective(fov, aspect, near, far float32) Matrix4 {
-
 	f := 1.0 / float32(math.Tan(float64(fov/2)))
 	m10 := (near + far) / (near - far)
 	w := (2 * near * far) / (near - far)
@@ -66,7 +68,8 @@ func MatrixPerspective(fov, aspect, near, far float32) Matrix4 {
 		f / aspect, 0, 0, 0,
 		0, f, 0, 0,
 		0, 0, m10, -1,
-		0, 0, w, 1}
+		0, 0, w, 1,
+	}
 }
 
 func (m Matrix4) Row(n int) Vector4 {
@@ -77,7 +80,7 @@ func (m Matrix4) Column(n int) Vector4 {
 	return Vector4{m[0+n*4], m[1+n*4], m[2+n*4], m[3+n*4]}
 }
 
-//calculate the determinant
+// calculate the determinant
 func (m Matrix4) Determinant() float32 {
 	m00 := m[0]
 	m01 := m[1]
